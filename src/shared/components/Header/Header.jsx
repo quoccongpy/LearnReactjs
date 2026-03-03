@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { MENU_ITEMS } from "../../utils/constants";
 import reactLogo from "../../../assets/react.svg";
 import pizzaHutLogo from "../../../assets/logo.svg";
@@ -19,6 +19,39 @@ function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const location = useLocation();
+
+  const scrollRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 0);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    checkScroll();
+    el.addEventListener("scroll", checkScroll);
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      el.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, [checkScroll]);
+
+  const scroll = (direction) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const scrollAmount = 200;
+    el.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <>
@@ -149,59 +182,84 @@ function Header() {
 
       <div className="sticky top-14 md:top-12 z-40 bg-white">
         <div className="px-4">
-          <div className="overflow-x-auto scrollbar-hide">
-            <nav className="flex items-center gap-4 md:gap-6 lg:gap-8 py-4 min-w-max">
+          <div className="relative flex items-center">
+
+            {canScrollLeft && (
               <button
-                onClick={() => setShowSearch(!showSearch)}
-                className="hidden lg:flex flex-col items-center gap-2 px-2 md:px-3 text-gray-700 hover:text-[#E31837] transition-colors group min-w-[70px]"
+                onClick={() => scroll("left")}
+                className="hidden md:flex absolute left-0 z-10 w-10 h-10 items-center justify-center bg-white border border-gray-200 rounded-full shadow-md hover:shadow-lg hover:border-gray-300 transition-all cursor-pointer -translate-x-1/2"
+                aria-label="Cuộn sang trái"
               >
-                <div className="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-red-50 flex items-center justify-center transition-colors">
-                  <IoSearchOutline className="w-5 h-5" />
-                </div>
-                <span className="text-xs font-semibold uppercase whitespace-nowrap">
-                  Tìm kiếm
-                </span>
+                <IoChevronBack className="w-5 h-5 text-gray-500" />
               </button>
+            )}
 
-              {MENU_ITEMS.map((item, index) => {
-                const IconComponent = item.icon;
-                const isActive = location.pathname === item.path;
+            <div
+              ref={scrollRef}
+              className="overflow-x-auto scrollbar-hide flex-1"
+            >
+              <nav className="flex items-center gap-4 md:gap-6 lg:gap-8 py-4 min-w-max">
+                <button
+                  onClick={() => setShowSearch(!showSearch)}
+                  className="hidden lg:flex flex-col items-center gap-2 px-2 md:px-3 text-gray-700 hover:text-[#E31837] transition-colors group min-w-[70px]"
+                >
+                  <div className="w-10 h-10 rounded-full bg-gray-100 group-hover:bg-red-50 flex items-center justify-center transition-colors">
+                    <IoSearchOutline className="w-5 h-5" />
+                  </div>
+                  <span className="text-xs font-semibold uppercase whitespace-nowrap">
+                    Tìm kiếm
+                  </span>
+                </button>
 
-                return (
-                  <Link
-                    key={index}
-                    to={item.path}
-                    className={`relative flex flex-col items-center gap-2 px-2 md:px-3 transition-colors group min-w-[70px] ${
-                      isActive
-                        ? "text-[#E31837]"
-                        : "text-gray-700 hover:text-[#E31837]"
-                    }`}
-                  >
-                    <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                {MENU_ITEMS.map((item, index) => {
+                  const IconComponent = item.icon;
+                  const isActive = location.pathname === item.path;
+
+                  return (
+                    <Link
+                      key={index}
+                      to={item.path}
+                      className={`relative flex flex-col items-center gap-2 px-2 md:px-3 transition-colors group min-w-[70px] ${
                         isActive
-                          ? "bg-red-50"
-                          : "bg-gray-100 group-hover:bg-red-50"
+                          ? "text-[#E31837]"
+                          : "text-gray-700 hover:text-[#E31837]"
                       }`}
                     >
-                      <IconComponent className="w-5 h-5" />
-                    </div>
-                    <span className="text-xs font-semibold uppercase whitespace-nowrap text-center">
-                      {item.label}
-                    </span>
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                          isActive
+                            ? "bg-red-50"
+                            : "bg-gray-100 group-hover:bg-red-50"
+                        }`}
+                      >
+                        <IconComponent className="w-5 h-5" />
+                      </div>
+                      <span className="text-xs font-semibold uppercase whitespace-nowrap text-center">
+                        {item.label}
+                      </span>
 
-                    {isActive && (
-                      <div className="absolute -bottom-4 left-0 right-0 h-1 bg-[#E31837] rounded-t-sm"></div>
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
+                      {isActive && (
+                        <div className="absolute -bottom-4 left-0 right-0 h-1 bg-[#E31837] rounded-t-sm"></div>
+                      )}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+
+            {canScrollRight && (
+              <button
+                onClick={() => scroll("right")}
+                className="hidden md:flex absolute right-0 z-10 w-10 h-10 items-center justify-center bg-white border border-gray-200 rounded-full shadow-md hover:shadow-lg hover:border-gray-300 transition-all cursor-pointer translate-x-1/2"
+                aria-label="Cuộn sang phải"
+              >
+                <IoChevronForward className="w-5 h-5 text-gray-500" />
+              </button>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Mobile menu overlay */}
       {isMobileMenuOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-[60] md:hidden"
