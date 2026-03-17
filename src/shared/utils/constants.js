@@ -14,6 +14,15 @@ import { RiDrinksLine } from "react-icons/ri";
 import { FaPepperHot } from "react-icons/fa";
 import { LuVegan } from "react-icons/lu";
 
+import {
+  IoHomeOutline,
+  IoFastFoodOutline,
+  IoReceiptOutline,
+  IoPeopleOutline,
+  IoSettingsOutline,
+} from "react-icons/io5";
+
+import { BiCategory } from "react-icons/bi";
 //router
 export const ROUTES = {
   HOME: "/",
@@ -41,4 +50,26 @@ export const MENU_ITEMS = [
   { label: "THỨC UỐNG", path: "/drinks", icon: RiDrinksLine },
   { label: "CAY", path: "/c", icon: FaPepperHot },
   { label: "CHAY", path: "/vegetarian", icon: LuVegan },
+];
+
+// user
+export const GUEST_MENU_ITEMS = [
+  { label: "Đăng nhập", path: "/login" },
+  { label: "Đăng ký", path: "/register" },
+];
+// Khi ĐÃ đăng nhập
+export const USER_MENU_ITEMS = [
+  { label: "Theo dõi đơn hàng", path: "/order-tracking" },
+  { label: "Đổi điểm", path: "/redeem-points" },
+  { label: "Hut Rewards", path: "/hut-rewards" },
+  { label: "Hỗ trợ khách hàng", path: "/support" },
+];
+
+export const SIDEBAR_ITEMS = [
+  { label: "Tổng quan", path: "/admin", icon: IoHomeOutline },
+  { label: "Menu", path: "/admin/menu", icon: IoFastFoodOutline },
+  { label: "Category", path: "/admin/category", icon: BiCategory },
+  { label: "Đơn hàng", path: "/admin/orders", icon: IoReceiptOutline },
+  { label: "Khách hàng", path: "/admin/customers", icon: IoPeopleOutline },
+  { label: "Cài đặt", path: "/admin/settings", icon: IoSettingsOutline },
 ];

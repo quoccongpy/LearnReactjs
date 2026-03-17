@@ -1,6 +1,10 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, NavLink } from "react-router-dom";
 import { useState, useRef, useEffect, useCallback } from "react";
-import { MENU_ITEMS } from "../../utils/constants";
+import {
+  MENU_ITEMS,
+  USER_MENU_ITEMS,
+  GUEST_MENU_ITEMS,
+} from "../../utils/constants";
 import reactLogo from "../../../assets/react.svg";
 import pizzaHutLogo from "../../../assets/logo.svg";
 
@@ -12,17 +16,33 @@ import {
   IoCloseOutline,
   IoChevronBack,
   IoChevronForward,
+  IoPersonCircleOutline,
 } from "react-icons/io5";
+import { useAuth } from "../../../features/auth/hooks/useAuth";
 
 function Header() {
   const [cartCount] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const location = useLocation();
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
+  const { user, logout } = useAuth();
+  const menuItems = user ? USER_MENU_ITEMS : GUEST_MENU_ITEMS;
 
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const checkScroll = useCallback(() => {
     const el = scrollRef.current;
@@ -95,6 +115,42 @@ function Header() {
                     {cartCount}
                   </span>
                 </Link>
+
+                <div className="relative" ref={userMenuRef}>
+                  <button
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    className="flex items-center gap-2 px-3 py-1.5 border border-gray-300 rounded-full hover:shadow-md transition-all"
+                  >
+                    <IoMenuOutline className="w-4 h-4 text-gray-700" />
+                    <IoPersonCircleOutline className="w-7 h-7 text-gray-600" />
+                  </button>
+
+                  {isUserMenuOpen && (
+                    <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+                      {menuItems.map((item, index) => (
+                        <Link
+                          key={index}
+                          to={item.path}
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="block px-5 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                      {user && (
+                        <button
+                          onClick={() => {
+                            logout();
+                            setIsUserMenuOpen(false);
+                          }}
+                          className="w-full text-left px-5 py-3 text-sm text-red-500 hover:bg-gray-50 transition-colors border-t border-gray-100"
+                        >
+                          Đăng xuất
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -183,7 +239,6 @@ function Header() {
       <div className="sticky top-14 md:top-12 z-40 bg-white">
         <div className="px-4">
           <div className="relative flex items-center">
-
             {canScrollLeft && (
               <button
                 onClick={() => scroll("left")}

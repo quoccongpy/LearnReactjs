@@ -1,17 +1,17 @@
 import AppRoutes from "./routes/AppRouter";
-import Footer from "./shared/components/Footer/Footer";
-import Header from "./shared/components/Header/Header";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <>
       <div className="max-w-[1280px] mx-auto bg-white min-h-screen">
-        <Header />
-        <main className="flex-grow">
-          <div className="h-[1000px] px-4">Nội dung giả để test cuộn trang</div>
-        </main>
         <AppRoutes />
-        <Footer />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          closeOnClick
+        />
       </div>
     </>
   );
