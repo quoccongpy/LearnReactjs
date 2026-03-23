@@ -95,15 +95,12 @@ function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar - Desktop */}
       <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-gray-200 fixed h-full z-30">
-        {/* Logo */}
         <div className="px-6 py-5 border-b border-gray-200">
           <h1 className="text-xl font-bold text-[#E31837]">🍕 Admin Panel</h1>
           <p className="text-xs text-gray-400 mt-1">Quản trị hệ thống</p>
         </div>
 
-        {/* Nav items */}
         <nav className="flex-1 px-3 py-4 space-y-1">
           {SIDEBAR_ITEMS.map((item, index) => {
             const Icon = item.icon;
@@ -125,7 +122,6 @@ function AdminDashboard() {
           })}
         </nav>
 
-        {/* User info + logout */}
         <div className="px-3 py-4 border-t border-gray-200">
           <div className="px-4 py-3">
             <p className="text-sm font-semibold text-gray-700 truncate">
@@ -143,7 +139,6 @@ function AdminDashboard() {
         </div>
       </aside>
 
-      {/* Sidebar - Mobile overlay */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
@@ -192,9 +187,7 @@ function AdminDashboard() {
         </div>
       )}
 
-      {/* Main content */}
       <div className="flex-1 lg:ml-64">
-        {/* Top bar */}
         <header className="sticky top-0 z-20 bg-white border-b border-gray-200">
           <div className="flex items-center justify-between px-4 lg:px-8 h-16">
             <div className="flex items-center gap-4">
@@ -232,9 +225,7 @@ function AdminDashboard() {
           </div>
         </header>
 
-        {/* Page content */}
         <main className="p-4 lg:p-8">
-          {/* Page title */}
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-800">Tổng quan</h2>
             <p className="text-sm text-gray-500 mt-1">
@@ -242,7 +233,6 @@ function AdminDashboard() {
             </p>
           </div>
 
-          {/* Stats cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
             {STATS.map((stat, index) => {
               const Icon = stat.icon;
@@ -270,7 +260,6 @@ function AdminDashboard() {
             })}
           </div>
 
-          {/* Recent orders table */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100">
             <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-800">
@@ -284,7 +273,6 @@ function AdminDashboard() {
               </Link>
             </div>
 
-            {/* Desktop table */}
             <div className="hidden md:block overflow-x-auto">
               <table className="w-full">
                 <thead>
@@ -327,7 +315,6 @@ function AdminDashboard() {
               </table>
             </div>
 
-            {/* Mobile cards */}
             <div className="md:hidden p-4 space-y-3">
               {RECENT_ORDERS.map((order, index) => (
                 <div

@@ -5,7 +5,9 @@ import Register from "../features/auth/pages/RegisterPage";
 import { ROUTES } from "../shared/utils/constants";
 import MainLayout from "../layouts/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
-import AdminDashboard from "../features/dashboard/pages/AdminDashboard";
+import AdminLayout from "../layouts/AdminLayout";
+import DashboardOverview from "../features/dashboard/pages/DashboardOverview";
+import CategoryPage from "../features/admin/category/pages/CategoryPage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -19,10 +21,13 @@ const AppRoutes = () => {
         path="/admin"
         element={
           <ProtectedRoute roles={"Admin"}>
-            <AdminDashboard></AdminDashboard>
+            <AdminLayout></AdminLayout>
           </ProtectedRoute>
         }
-      ></Route>
+      >
+        <Route index element={<DashboardOverview />}></Route>
+        <Route path="category" element={<CategoryPage />} />
+      </Route>
     </Routes>
   );
 };
