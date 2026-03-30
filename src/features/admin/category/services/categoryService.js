@@ -1,4 +1,4 @@
-import axiosClient from "../../../core/api/axiosClient";
+import axiosClient from "../../../../core/api/axiosClient";
 
 const categoryService = {
   getAll: () => axiosClient.get("/category"),

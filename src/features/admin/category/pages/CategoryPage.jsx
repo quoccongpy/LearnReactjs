@@ -8,7 +8,7 @@ import {
 import LoadingOverlay from "../../../../shared/components/LoadingOverlay";
 import toastService from "../../../../shared/utils/toastService";
 import { useEffect, useState } from "react";
-import categoryService from "../../../dashboard/services/categoryService";
+import categoryService from "../services/categoryService";
 
 function CategoryPage() {
   const [categories, setCategories] = useState([]);
