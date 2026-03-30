@@ -8,6 +8,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import AdminLayout from "../layouts/AdminLayout";
 import DashboardOverview from "../features/dashboard/pages/DashboardOverview";
 import CategoryPage from "../features/admin/category/pages/CategoryPage";
+import ProductPage from "../features/admin/product/pages/ProductPage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -27,6 +28,7 @@ const AppRoutes = () => {
       >
         <Route index element={<DashboardOverview />}></Route>
         <Route path="category" element={<CategoryPage />} />
+        <Route path="product" element={<ProductPage />} />
       </Route>
     </Routes>
   );

@@ -67,9 +67,11 @@ export const USER_MENU_ITEMS = [
 
 export const SIDEBAR_ITEMS = [
   { label: "Tổng quan", path: "/admin", icon: IoHomeOutline },
-  { label: "Menu", path: "/admin/menu", icon: IoFastFoodOutline },
+  { label: "Menu", path: "/admin/product", icon: IoFastFoodOutline },
   { label: "Category", path: "/admin/category", icon: BiCategory },
   { label: "Đơn hàng", path: "/admin/orders", icon: IoReceiptOutline },
   { label: "Khách hàng", path: "/admin/customers", icon: IoPeopleOutline },
   { label: "Cài đặt", path: "/admin/settings", icon: IoSettingsOutline },
 ];
+
+export const BASE_URL = "https://localhost:5000";
