@@ -19,9 +19,9 @@ const productService = {
     });
   },
 
-  getAll: (keyword = "", pageIndex = 1, pageSize = 10) => {
+  getAll: (keyword = "", categoryId = null, pageIndex = 1, pageSize = 10) => {
     return axiosClient.get("/product/get-all", {
-      params: { keyword, pageIndex, pageSize },
+      params: { keyword, categoryId, pageIndex, pageSize },
     });
   },
 
