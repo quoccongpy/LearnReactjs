@@ -18,11 +18,16 @@ function ProductPage() {
   const [loading, setLoading] = useState(false);
   const thumbnailRef = useRef(null);
   const imagesRef = useRef(null);
+
   const [selected, setSelected] = useState(null);
   const [openModal, setOpenModal] = useState(null);
+
   const [keyword, setKeyword] = useState("");
   const [pageIndex, setPageIndex] = useState(1);
   const [pageSize] = useState(10);
+  const [pageCount, setPageCount] = useState(0);
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+
   const [categories, setcategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
@@ -107,8 +112,14 @@ function ProductPage() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await productService.getAll(keyword, pageIndex, pageSize);
+      const res = await productService.getAll(
+        keyword,
+        selectedCategoryId,
+        pageIndex,
+        pageSize,
+      );
       setProducts(res.data?.results || []);
+      setPageCount(Math.ceil((res.data?.rowCount || 0) / pageSize));
     } catch {
       toastService.error("Không thể tải sản phẩm");
     } finally {
@@ -131,9 +142,22 @@ function ProductPage() {
   };
 
   useEffect(() => {
-    fetchProducts();
     fetchCategories();
-  }, [pageIndex]);
+  }, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [pageIndex, selectedCategoryId]);
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategoryId(e.target.value);
+    setPageIndex(1);
+  };
+
+  const handleSearch = () => {
+    setPageIndex(1);
+    fetchProducts();
+  };
 
   const addPerfommance = async () => {
     try {
@@ -142,6 +166,7 @@ function ProductPage() {
       toastService.success("Thêm sản phẩm thành công!");
       resetForm();
       setOpenModal(null);
+      fetchProducts();
     } catch (error) {
       toastService.error(error.response?.data || "Thêm thất bại");
     } finally {
@@ -201,14 +226,36 @@ function ProductPage() {
           </button>
         </div>
 
-        <input
-          type="text"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && fetchProducts()}
-          placeholder="Tìm kiếm sản phẩm..."
-          className="w-full max-w-md px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#E31837]"
-        />
+        <div className="flex items-center gap-3 mb-4">
+          <input
+            type="text"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            placeholder="Tìm kiếm sản phẩm..."
+            className="flex-1 min-w-[300px] px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#E31837]"
+          />
+
+          <select
+            value={selectedCategoryId}
+            onChange={handleCategoryChange}
+            className="px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#E31837] min-w-[180px]"
+          >
+            <option value="">Danh mục</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+
+          <button
+            onClick={handleSearch}
+            className="px-5 py-2.5 bg-[#E31837] text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-medium whitespace-nowrap"
+          >
+            Tìm kiếm
+          </button>
+        </div>
       </div>
       <br></br>
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -229,7 +276,10 @@ function ProductPage() {
                 key={item.id}
                 className="border-b border-gray-50 hover:bg-gray-50"
               >
-                <td className="px-4 py-3 text-sm text-gray-500">{index + 1}</td>
+                <td className="px-4 py-3 text-sm text-gray-500">
+                  {" "}
+                  {(pageIndex - 1) * pageSize + index + 1}
+                </td>
                 <td className="px-4 py-3">
                   <img
                     src={`${BASE_URL}${item.thumbnail}`}
@@ -309,6 +359,54 @@ function ProductPage() {
         </table>
       </div>
 
+      {pageCount > 0 && (
+        <div className="flex items-center justify-center gap-2 mt-6">
+          <button
+            onClick={() => setPageIndex(pageIndex - 1)}
+            disabled={pageIndex === 1}
+            className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+              pageIndex === 1
+                ? "text-gray-300 cursor-not-allowed"
+                : "text-gray-600 hover:bg-gray-100"
+            }`}
+          >
+            <IoChevronBackOutline className="w-4 h-4">
+              Trước
+            </IoChevronBackOutline>
+          </button>
+          {Array.from({ length: pageCount }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setPageIndex(page)}
+              className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
+                page === pageIndex
+                  ? "bg-[#E31837] text-white shadow-md"
+                  : "text-gray-600 hover:bg-gray-100"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            onClick={() => setPageIndex(pageIndex + 1)}
+            disabled={pageIndex >= pageCount}
+            className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+              pageIndex >= pageCount
+                ? "text-gray-300 cursor-not-allowed"
+                : "text-gray-600 hover:bg-gray-100"
+            }`}
+          >
+            <IoChevronForwardOutline className="w-4 h-4">
+              Sau
+            </IoChevronForwardOutline>
+          </button>
+        </div>
+      )}
+      {pageCount > 0 && (
+        <p className="text-center text-sm text-gray-400 mt-2">
+          Trang {pageIndex} / {pageCount}
+        </p>
+      )}
       {(openModal === "add" || openModal === "edit") && (
         <div
           className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4"
