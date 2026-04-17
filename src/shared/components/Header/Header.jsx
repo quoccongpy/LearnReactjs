@@ -268,35 +268,32 @@ function Header() {
 
                 {MENU_ITEMS.map((item, index) => {
                   const IconComponent = item.icon;
-                  const isActive = location.pathname === item.path;
 
                   return (
-                    <Link
+                    <button
                       key={index}
-                      to={item.path}
-                      className={`relative flex flex-col items-center gap-2 px-2 md:px-3 transition-colors group min-w-[70px] ${
-                        isActive
-                          ? "text-[#E31837]"
-                          : "text-gray-700 hover:text-[#E31837]"
-                      }`}
+                      onClick={() => {
+                        // Tìm section có tên category khớp với label
+                        const sections = document.querySelectorAll('.home-section');
+                        for (const section of sections) {
+                          const title = section.querySelector('.home-section__title');
+                          if (title && title.textContent.trim().toLowerCase().includes(item.label.toLowerCase())) {
+                            const headerOffset = 140;
+                            const top = section.getBoundingClientRect().top + window.scrollY - headerOffset;
+                            window.scrollTo({ top, behavior: 'smooth' });
+                            break;
+                          }
+                        }
+                      }}
+                      className="relative flex flex-col items-center gap-2 px-2 md:px-3 transition-colors group min-w-[70px] text-gray-700 hover:text-[#E31837] cursor-pointer"
                     >
-                      <div
-                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
-                          isActive
-                            ? "bg-red-50"
-                            : "bg-gray-100 group-hover:bg-red-50"
-                        }`}
-                      >
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center transition-colors bg-gray-100 group-hover:bg-red-50">
                         <IconComponent className="w-5 h-5" />
                       </div>
                       <span className="text-xs font-semibold uppercase whitespace-nowrap text-center">
                         {item.label}
                       </span>
-
-                      {isActive && (
-                        <div className="absolute -bottom-4 left-0 right-0 h-1 bg-[#E31837] rounded-t-sm"></div>
-                      )}
-                    </Link>
+                    </button>
                   );
                 })}
               </nav>
