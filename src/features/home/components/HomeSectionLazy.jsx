@@ -1,22 +1,50 @@
 import useLazySection from "../hooks/useLazySection";
+import { getCategoryBannerImage } from "../utils/categoryImages";
 import SkeletonSection from "./SkeletonSection";
-import VirtualProductList from "./VirtualProductList";
+import ProductCard from "./ProductCard";
+
 export default function HomeSectionLazy({ category }) {
   const { sectionRef, products, loading, isVisible } = useLazySection(
     category.id,
   );
 
+  const bannerImage = getCategoryBannerImage(category.name);
+
   return (
-    <section ref={sectionRef} className="py-6 border-b border-gray-100">
-      <h2 className="text-xl font-bold text-gray-800 mb-4">{category.name}</h2>
-      {(!isVisible || loading) && <SkeletonSection></SkeletonSection>}
+    <section
+      id={`category-${category.id}`}
+      ref={sectionRef}
+      className="home-section"
+    >
+      <h2 className="home-section__title">{category.name}</h2>
+
+      {/* Category Banner */}
+      <div className="home-section__banner">
+        {bannerImage ? (
+          <img
+            src={bannerImage}
+            alt={category.name}
+            className="home-section__banner-img"
+          />
+        ) : (
+          <div className="home-section__banner-content">
+            <span className="home-section__banner-text">{category.name}</span>
+          </div>
+        )}
+      </div>
+
+      {(!isVisible || loading) && <SkeletonSection />}
 
       {isVisible && !loading && products.length > 0 && (
-        <VirtualProductList products={products}></VirtualProductList>
+        <div className="home-section__grid">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       )}
 
       {isVisible && !loading && products.length === 0 && (
-        <p className="text-gray-400 text-sm italic">
+        <p className="home-section__empty">
           Chưa có sản phẩm trong danh mục này
         </p>
       )}

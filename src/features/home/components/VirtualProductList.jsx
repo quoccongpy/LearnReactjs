@@ -1,7 +1,6 @@
 import { Grid } from "react-window";
 import ProductCard from "./ProductCard";
 
-// v2: cell nhận columnIndex, rowIndex, style, + cellProps
 function ProductCell({ columnIndex, style, products }) {
   const product = products[columnIndex];
   return (
