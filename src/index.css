@@ -309,6 +309,17 @@
   line-height: 1;
 }
 
+.product-card__desc {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 4px 0 0 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .product-card__add-btn {
   width: 36px;
   height: 36px;

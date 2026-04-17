@@ -6,7 +6,6 @@ export default function ProductCard({ product }) {
 
   return (
     <div className="product-card">
-      {/* Image */}
       <div className="product-card__image-wrapper">
         {imageUrl ? (
           <img
@@ -20,9 +19,9 @@ export default function ProductCard({ product }) {
         )}
       </div>
 
-      {/* Info */}
       <div className="product-card__info">
         <h3 className="product-card__name">{product.name}</h3>
+        <p className="product-card__desc">{product.description}</p>
         <div className="product-card__price-row">
           <div>
             <span className="product-card__price-label">Chỉ từ</span>
