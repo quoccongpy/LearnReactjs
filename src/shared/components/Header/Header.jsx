@@ -1,11 +1,10 @@
-import { Link, useLocation, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useState, useRef, useEffect, useCallback } from "react";
 import {
   MENU_ITEMS,
   USER_MENU_ITEMS,
   GUEST_MENU_ITEMS,
 } from "../../utils/constants";
-import reactLogo from "../../../assets/react.svg";
 import pizzaHutLogo from "../../../assets/logo.svg";
 
 import {
@@ -19,12 +18,14 @@ import {
   IoPersonCircleOutline,
 } from "react-icons/io5";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
+import LocationModal from "../LocationModal";
 
 function Header() {
   const [cartCount] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const location = useLocation();
+  const [showLocationModal, setShowLocationModal] = useState(false);
+  const [location, setLocation] = useState(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
   const { user, logout } = useAuth();
@@ -79,15 +80,12 @@ function Header() {
         <div className="hidden md:block">
           <div className="px-4">
             <div className="flex items-center justify-between h-12">
-              <div className="flex items-center gap-2">
-                <img
-                  src={reactLogo}
-                  alt="React"
-                  className="h-6 w-6 animate-spin"
-                  style={{ animationDuration: "10s" }}
-                />
-                <span className="text-sm font-semibold text-gray-700">
-                  React App
+              <div
+                className="flex flex-col cursor-pointer"
+                onClick={() => setShowLocationModal(true)}
+              >
+                <span className="text-sm font-semibold text-gray-800 truncate max-w-[220px]">
+                  {location?.address || "Chọn địa chỉ"}
                 </span>
               </div>
 
@@ -273,14 +271,25 @@ function Header() {
                     <button
                       key={index}
                       onClick={() => {
-                        // Tìm section có tên category khớp với label
-                        const sections = document.querySelectorAll('.home-section');
+                        const sections =
+                          document.querySelectorAll(".home-section");
                         for (const section of sections) {
-                          const title = section.querySelector('.home-section__title');
-                          if (title && title.textContent.trim().toLowerCase().includes(item.label.toLowerCase())) {
+                          const title = section.querySelector(
+                            ".home-section__title",
+                          );
+                          if (
+                            title &&
+                            title.textContent
+                              .trim()
+                              .toLowerCase()
+                              .includes(item.label.toLowerCase())
+                          ) {
                             const headerOffset = 140;
-                            const top = section.getBoundingClientRect().top + window.scrollY - headerOffset;
-                            window.scrollTo({ top, behavior: 'smooth' });
+                            const top =
+                              section.getBoundingClientRect().top +
+                              window.scrollY -
+                              headerOffset;
+                            window.scrollTo({ top, behavior: "smooth" });
                             break;
                           }
                         }
@@ -311,6 +320,13 @@ function Header() {
           </div>
         </div>
       </div>
+
+      {showLocationModal && (
+        <LocationModal
+          onClose={() => setShowLocationModal(false)}
+          onSelect={(data) => setLocation(data)}
+        />
+      )}
 
       {isMobileMenuOpen && (
         <div
