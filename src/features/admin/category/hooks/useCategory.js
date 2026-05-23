@@ -4,12 +4,17 @@ import categoryService from "../services/categoryService";
 export default function useCategory() {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
 
   const fetchCategories = async () => {
     try {
       setLoading(true);
+      setError(null);
       const res = await categoryService.getAll();
       setCategories(res.data);
+    } catch (err) {
+      setError(err);
+      setCategories([]);
     } finally {
       setLoading(false);
     }
@@ -32,6 +37,7 @@ export default function useCategory() {
   return {
     categories,
     loading,
+    error,
     fetchCategories,
     createCategory,
     updateCategory,

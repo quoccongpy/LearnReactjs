@@ -52,6 +52,11 @@ const productService = {
   },
 
   delete: (id) => axiosClient.delete(`/product/${id}`),
+
+  getProductByCategory: (categoryId, take = 50) =>
+    axiosClient.get(`/product/by-category/${categoryId}`, {
+      params: { take },
+    }),
 };
 
 export default productService;

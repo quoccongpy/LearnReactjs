@@ -1,7 +1,7 @@
 import { IoAddOutline } from "react-icons/io5";
 import LoadingOverlay from "../../../../shared/components/LoadingOverlay";
 import toastService from "../../../../shared/utils/toastService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryTable from "../components/CategoryTable";
 import CategoryFormModal from "../components/CategoryFormModal";
 import CategoryDeleteModal from "../components/CategoryDeleteModal";
@@ -9,13 +9,14 @@ import CategoryViewModal from "../components/CategoryViewModal";
 import useCategory from "../hooks/useCategory";
 
 function CategoryPage() {
-  const [loading] = useState(false);
   const [selected, setSelected] = useState(null);
   const [openModal, setOpenModal] = useState(null);
   const [name, setName] = useState("");
 
   const {
     categories,
+    loading,
+    error,
     fetchCategories,
     createCategory,
     updateCategory,
@@ -61,6 +62,14 @@ function CategoryPage() {
       toastService.error(error.response?.data?.message || "Xóa thất bại");
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      toastService.error(
+        error.response?.data?.message || "Không thể tải danh mục",
+      );
+    }
+  }, [error]);
   return (
     <>
       <div>
