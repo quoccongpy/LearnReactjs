@@ -4,12 +4,17 @@ import sizeService from "../services/sizeService";
 export default function useSize() {
   const [loading, setLoading] = useState(false);
   const [size, setSize] = useState([]);
+  const [error, setError] = useState(null);
 
   const fetchSize = async () => {
     try {
       setLoading(true);
+      setError(null);
       const res = await sizeService.getAll();
       setSize(res.data);
+    } catch (err) {
+      setError(err);
+      setSize([]);
     } finally {
       setLoading(false);
     }
@@ -30,6 +35,7 @@ export default function useSize() {
   return {
     size,
     loading,
+    error,
     fetchSize,
     createSize,
     updateSize,

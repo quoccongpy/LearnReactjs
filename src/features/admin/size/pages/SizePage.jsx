@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoadingOverlay from "../../../../shared/components/LoadingOverlay";
 import { IoAddOutline } from "react-icons/io5";
 import SizeFormModal from "../components/SizeFormModal";
@@ -9,12 +9,19 @@ import SizeViewModal from "../components/SizeViewModal";
 import SizeDeleteModal from "../components/SizeDeleteModal";
 
 function SizePage() {
-  const [loading] = useState(false);
   const [selected, setSelected] = useState(null);
   const [openModal, setOpenModal] = useState(null);
   const [name, setName] = useState("");
 
-  const { size, fetchSize, createSize, updateSize, deleteSize } = useSize();
+  const {
+    size,
+    loading,
+    error,
+    fetchSize,
+    createSize,
+    updateSize,
+    deleteSize,
+  } = useSize();
 
   const addPerfommance = async () => {
     if (!name.trim()) {
@@ -51,6 +58,13 @@ function SizePage() {
       toastService.error(error.response?.data?.message || "Xoá thất bại");
     }
   };
+  useEffect(() => {
+    if (error) {
+      toastService.error(
+        error.response?.data?.message || "Không thể tải kích thước bánh",
+      );
+    }
+  }, [error]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoAddOutline } from "react-icons/io5";
 import CrustFormModal from "../components/CrustFormModal";
 import useCrust from "../hook/useCrust";
@@ -6,14 +6,21 @@ import toastService from "../../../../shared/utils/toastService";
 import CrustTable from "../components/CrustTable";
 import CrustViewModal from "../components/CrustViewModal";
 import CrustDeleteModal from "../components/CrustDeleteModal";
+import LoadingOverlay from "../../../../shared/components/LoadingOverlay";
 function CrustPage() {
-  const [loading] = useState(false);
   const [selected, setSelected] = useState(null);
   const [openModal, setOpenModal] = useState(null);
   const [name, setName] = useState("");
 
-  const { crust, fetchCrust, createCrust, updateCrust, deleteCrust } =
-    useCrust();
+  const {
+    crust,
+    loading,
+    error,
+    fetchCrust,
+    createCrust,
+    updateCrust,
+    deleteCrust,
+  } = useCrust();
 
   const addPerfommance = async () => {
     if (!name.trim()) {
@@ -50,6 +57,14 @@ function CrustPage() {
       toastService.error(error.response?.data?.message || "Xoá thất bại");
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      toastService.error(
+        error.response?.data?.message || "Không thể tải đế bánh",
+      );
+    }
+  }, [error]);
 
   return (
     <>

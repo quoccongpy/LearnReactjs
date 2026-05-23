@@ -1,5 +1,5 @@
 //icon
-import { AiOutlineLike } from "react-icons/ai";
+import { AiOutlineLike, AiOutlineProduct } from "react-icons/ai";
 import {
   FaGift,
   FaStar,
@@ -13,7 +13,6 @@ import { GiChickenOven } from "react-icons/gi";
 import { RiDrinksLine } from "react-icons/ri";
 import { FaPepperHot } from "react-icons/fa";
 import { LuVegan } from "react-icons/lu";
-
 import {
   IoHomeOutline,
   IoFastFoodOutline,
@@ -73,6 +72,11 @@ export const SIDEBAR_ITEMS = [
   { label: "Category", path: "/admin/category", icon: BiCategory },
   { label: "Size", path: "/admin/size", icon: IoMdResize },
   { label: "Crust", path: "/admin/crust", icon: FiLayers },
+  {
+    label: "Product Variant",
+    path: "/admin/product-variant",
+    icon: AiOutlineProduct,
+  },
   { label: "Đơn hàng", path: "/admin/orders", icon: IoReceiptOutline },
   { label: "Khách hàng", path: "/admin/customers", icon: IoPeopleOutline },
   { label: "Cài đặt", path: "/admin/settings", icon: IoSettingsOutline },

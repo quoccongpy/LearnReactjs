@@ -4,12 +4,17 @@ import crustService from "../services/crustService";
 export default function useCrust() {
   const [loading, setLoading] = useState(false);
   const [crust, setCrust] = useState([]);
+  const [error, setError] = useState(null);
 
   const fetchCrust = async () => {
     try {
       setLoading(true);
+      setError(null);
       const res = await crustService.getAll();
       setCrust(res.data);
+    } catch (err) {
+      setError(err);
+      setCrust([]);
     } finally {
       setLoading(false);
     }
@@ -30,6 +35,7 @@ export default function useCrust() {
   return {
     crust,
     loading,
+    error,
     fetchCrust,
     createCrust,
     updateCrust,

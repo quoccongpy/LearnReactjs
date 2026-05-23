@@ -11,6 +11,7 @@ import CategoryPage from "../features/admin/category/pages/CategoryPage";
 import ProductPage from "../features/admin/product/pages/ProductPage";
 import SizePage from "../features/admin/size/pages/SizePage";
 import CrustPage from "../features/admin/crust/pages/CrustPage";
+import ProductVariantPage from "../features/admin/product-variant/pages/ProductVariantPage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -31,6 +32,7 @@ const AppRoutes = () => {
         <Route index element={<DashboardOverview />}></Route>
         <Route path="category" element={<CategoryPage />} />
         <Route path="product" element={<ProductPage />} />
+        <Route path="product-variant" element={<ProductVariantPage />} />
         <Route path="size" element={<SizePage />} />
         <Route path="crust" element={<CrustPage />} />
       </Route>
