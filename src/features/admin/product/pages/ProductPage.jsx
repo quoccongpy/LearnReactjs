@@ -185,7 +185,7 @@ function ProductPage() {
       <ProductDeleteModal
         open={modal === "delete"}
         onClose={() => setModal(null)}
-        onConfirm={deleteProduct} // ✅ FIX
+        onConfirm={deleteProduct}
         selected={selected}
       />
     </>
