@@ -3,7 +3,7 @@ import { getCategoryBannerImage } from "../utils/categoryImages";
 import SkeletonSection from "./SkeletonSection";
 import ProductCard from "./ProductCard";
 
-export default function HomeSectionLazy({ category }) {
+export default function HomeSectionLazy({ category, onProductAdd }) {
   const { sectionRef, products, loading, isVisible } = useLazySection(
     category.id,
   );
@@ -18,7 +18,6 @@ export default function HomeSectionLazy({ category }) {
     >
       <h2 className="home-section__title">{category.name}</h2>
 
-      {/* Category Banner */}
       <div className="home-section__banner">
         {bannerImage ? (
           <img
@@ -38,7 +37,11 @@ export default function HomeSectionLazy({ category }) {
       {isVisible && !loading && products.length > 0 && (
         <div className="home-section__grid">
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onAddClick={onProductAdd}
+            />
           ))}
         </div>
       )}

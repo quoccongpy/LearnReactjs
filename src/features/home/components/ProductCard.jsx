@@ -1,7 +1,7 @@
 import { BASE_URL } from "../../../shared/utils/constants";
 import { IoAddOutline } from "react-icons/io5";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, onAddClick }) {
   const imageUrl = product.thumbnail ? `${BASE_URL}${product.thumbnail}` : null;
 
   return (
@@ -29,7 +29,14 @@ export default function ProductCard({ product }) {
               {product.price?.toLocaleString("vi-VN")}đ
             </p>
           </div>
-          <button className="product-card__add-btn" aria-label="Thêm vào giỏ">
+          <button
+            className="product-card__add-btn"
+            aria-label="Thêm vào giỏ"
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddClick?.(product);
+            }}
+          >
             <IoAddOutline />
           </button>
         </div>

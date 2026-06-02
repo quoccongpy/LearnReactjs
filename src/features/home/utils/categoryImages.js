@@ -5,6 +5,7 @@ import KidsMenu from "../../../assets/imageCategory/KidsMenu.png";
 import Menu49k from "../../../assets/imageCategory/Menu49k.png";
 import MyBox from "../../../assets/imageCategory/MyBox.png";
 import ThucUong from "../../../assets/imageCategory/ThucUong.png";
+import mua1tang1 from "../../../assets/imageCategory/mua1tang1.png";
 
 const IMAGE_MAP = {
   pizza: Pizza,
@@ -18,6 +19,8 @@ const IMAGE_MAP = {
   "my box": MyBox,
   "thức uống": ThucUong,
   "thuc uong": ThucUong,
+  "mua 1 tặng 1": mua1tang1,
+  "mua 1 tang 1": mua1tang1,
 };
 
 export function getCategoryBannerImage(categoryName) {
