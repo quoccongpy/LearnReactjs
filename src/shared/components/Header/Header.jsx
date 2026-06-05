@@ -6,6 +6,7 @@ import {
   GUEST_MENU_ITEMS,
 } from "../../utils/constants";
 import pizzaHutLogo from "../../../assets/logo.svg";
+import { useSelector } from "react-redux";
 
 import {
   IoNotificationsOutline,
@@ -19,9 +20,10 @@ import {
 } from "react-icons/io5";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import LocationModal from "../LocationModal";
+import { selectCartCount } from "../../../core/store/slice/cartSlice";
 
 function Header() {
-  const [cartCount] = useState(0);
+  const cartCount = useSelector(selectCartCount);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);

@@ -4,8 +4,8 @@ import useProductVariantModal from "../hooks/useProductVariantModal";
 export default function ProductVariantModal({
   product,
   open,
-  onClose /* ,
-  onAddToCart, */,
+  onClose,
+  onAddToCart,
 }) {
   const {
     loading,
@@ -25,7 +25,25 @@ export default function ProductVariantModal({
 
   if (!open || !product) return null;
   const imageUrl = product.thumbnail ? `${BASE_URL}${product.thumbnail}` : null;
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    const cartData = {
+      productId: product.id,
+      productName: product.name,
+      thumbnail: product.thumbnail,
+      variantId: selectedVariant?.id || null,
+      sizeName: selectedVariant?.sizeName || null,
+      crustName: selectedVariant?.crustName || null,
+      price: selectedVariant?.price || product.price,
+      quantity,
+      note,
+    };
+    console.log("Data:", cartData);
+
+    if (onAddToCart) {
+      onAddToCart(cartData);
+    }
+    onClose();
+  };
 
   return (
     <div className="product-modal-overlay" onClick={onClose}>

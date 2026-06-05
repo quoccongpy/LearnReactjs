@@ -12,11 +12,16 @@ import ProductPage from "../features/admin/product/pages/ProductPage";
 import SizePage from "../features/admin/size/pages/SizePage";
 import CrustPage from "../features/admin/crust/pages/CrustPage";
 import ProductVariantPage from "../features/admin/product-variant/pages/ProductVariantPage";
+import CartPage from "../features/cart/pages/CartPage";
+import CartLayout from "../layouts/CartLayout";
 const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<MainLayout />}>
         <Route path={ROUTES.HOME} element={<Home />} />
+      </Route>
+      <Route element={<CartLayout />}>
+        <Route path={ROUTES.CART} element={<CartPage />} />
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />}></Route>
       <Route path={ROUTES.REGISTER} element={<Register />}></Route>
