@@ -23,31 +23,31 @@ export default function CartPage() {
   const count = useSelector(selectCartCount);
   const dispatch = useDispatch();
   if (items.length === 0) {
-    <div className="cart-page">
-      <div className="cart-empty">
-        <IoCartOutline className="cart-empty__icon" />
-        <h2 className="cart-empty__title">Giỏ hàng trống!</h2>
-        <p className="cart-empty__desc">
-          Hãy thêm sản phẩm yêu thích vào giỏ hàng
-        </p>
-        <Link to="/" className="cart-empty__btn">
-          Khám phá menu
-        </Link>
+    return (
+      <div className="cart-page__header">
+        <div className="cart-empty">
+          <IoCartOutline className="cart-empty__icon" />
+          <h2 className="cart-empty__title">Giỏ hàng trống!</h2>
+          <p className="cart-empty__desc">
+            Hãy thêm sản phẩm yêu thích vào giỏ hàng
+          </p>
+          <Link to="/" className="cart-empty__btn">
+            Khám phá menu
+          </Link>
+        </div>
       </div>
-    </div>;
+    );
   }
   return (
     <div className="cart-page">
-      <div className="cart-header">
-        <h1 className="cart-header__title">
-          Giỏ hàng của bạn ({count} sản phẩm)
-          <button
-            className="cart-header__clear"
-            onClick={() => dispatch(clearCart())}
-          >
-            Xóa tất cả
-          </button>
-        </h1>
+      <div className="cart-page__header">
+        <h1>Giỏ hàng của bạn ({count} sản phẩm)</h1>
+        <button
+          className="cart-header__clear"
+          onClick={() => dispatch(clearCart())}
+        >
+          Xóa tất cả
+        </button>
       </div>
       <div className="cart-body">
         <div className="cart-items">
@@ -78,7 +78,6 @@ export default function CartPage() {
                   <p className="cart-item__price">
                     {item.price?.toLocaleString("vi-VN")} đ
                   </p>
-                  <p className="cart-item__soluong">{item.quantity}</p>
                 </div>
 
                 <div className="cart-item__actions">
