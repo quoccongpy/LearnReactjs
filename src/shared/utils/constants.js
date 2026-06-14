@@ -83,3 +83,5 @@ export const SIDEBAR_ITEMS = [
 ];
 
 export const BASE_URL = "https://localhost:5000";
+
+export const CART_STORAGE_KEY = "LearnReactjs";

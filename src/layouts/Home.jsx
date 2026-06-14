@@ -2,19 +2,23 @@ import { useState } from "react";
 import HomeSectionLazy from "../features/home/components/HomeSectionLazy";
 import useHome from "../features/home/hooks/useHome";
 import ProductVariantModal from "../features/home/components/ProductVariantModal";
+import { useDispatch } from "react-redux";
+import { addItem } from "../core/store/slice/cartSlice";
+import { toast } from "react-toastify";
 
 function Home() {
   const { categories, loading } = useHome();
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const dispatch = useDispatch();
   const handleProductAdd = (product) => {
     setSelectedProduct(product);
   };
   const handleCloseModal = () => {
     setSelectedProduct(null);
   };
-  const handleAddToCart = (orderData) => {
-    console.log("Thêm vào giỏ hàng:", orderData);
-    // TODO: Tích hợp cart sau
+  const handleAddToCart = (cartItemData) => {
+    dispatch(addItem(cartItemData));
+    toast.success("Đã thêm vào giỏ hàng!");
   };
 
   if (loading) {
@@ -41,6 +45,7 @@ function Home() {
         product={selectedProduct}
         open={!!selectedProduct}
         onClose={handleCloseModal}
+        onAddToCart={handleAddToCart}
       ></ProductVariantModal>
     </div>
   );
