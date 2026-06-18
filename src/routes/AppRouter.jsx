@@ -14,6 +14,8 @@ import CrustPage from "../features/admin/crust/pages/CrustPage";
 import ProductVariantPage from "../features/admin/product-variant/pages/ProductVariantPage";
 import CartPage from "../features/cart/pages/CartPage";
 import CartLayout from "../layouts/CartLayout";
+import CheckoutPage from "../features/order/pages/CheckoutPage";
+import CheckoutLayout from "../layouts/CheckoutLayout";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -22,6 +24,9 @@ const AppRoutes = () => {
       </Route>
       <Route element={<CartLayout />}>
         <Route path={ROUTES.CART} element={<CartPage />} />
+      </Route>
+      <Route element={<CheckoutLayout />}>
+        <Route path={ROUTES.CHECKOUT} element={<CheckoutPage />} />
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />}></Route>
       <Route path={ROUTES.REGISTER} element={<Register />}></Route>

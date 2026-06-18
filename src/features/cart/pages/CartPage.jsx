@@ -13,11 +13,12 @@ import {
   IoRemoveOutline,
   IoCartOutline,
 } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import ".//..//..//..//shared/styles/cart.css";
-import { BASE_URL } from "..//..//..//shared//utils//constants";
+import { Link, useNavigate } from "react-router-dom";
+import "../../../shared/styles/cart.css";
+import { BASE_URL, ROUTES } from "../../../shared/utils/constants";
 
 export default function CartPage() {
+  const navigate = useNavigate();
   const items = useSelector(selectCartItems);
   const total = useSelector(selectCartTotal);
   const count = useSelector(selectCartCount);
@@ -134,7 +135,10 @@ export default function CartPage() {
               {total.toLocaleString("vi-VN")} đ
             </span>
           </div>
-          <button className="cart-summary__checkout">
+          <button
+            className="cart-summary__checkout"
+            onClick={() => navigate(ROUTES.CHECKOUT)}
+          >
             Thanh toán • {total.toLocaleString("vi-VN")} đ
           </button>
         </div>

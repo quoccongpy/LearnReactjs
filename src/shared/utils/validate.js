@@ -7,6 +7,9 @@ export const validateRegister = (formData) => {
   } else if (!phoneRegex.test(formData.phone)) {
     newErrors.phone = "Số điện thoại phải gồm 10 chữ số, bắt đầu bằng 0";
   }
+  if (!formData.username || !formData.username.trim()) {
+    newErrors.username = "Vui lòng nhập tên đăng nhập";
+  }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!formData.email) {
