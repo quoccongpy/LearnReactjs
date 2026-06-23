@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import reactLogo from "../../../assets/react.svg";
 import toastService from "../../../shared/utils/toastService";
 import LoadingOverlay from "../../../shared/components/LoadingOverlay";
@@ -7,8 +7,11 @@ import { useAuth } from "../hooks/useAuth";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
+
+  const from = location.state?.from?.pathname || "/";
 
   const [formData, setFormData] = useState({
     email: "",
@@ -38,7 +41,9 @@ function LoginPage() {
           : [roleClaim]
         : [];
 
-      if (roles.includes("Admin")) {
+      if (from) {
+        navigate(from, { replace: true });
+      } else if (roles.includes("Admin")) {
         navigate("/admin");
       } else {
         navigate("/");

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../../shared/styles/checkout.css";
 import DeliverySection from "./DeliverySection.jsx";
 import { IoChevronForward } from "react-icons/io5";
@@ -11,6 +11,7 @@ import {
   selectCartCount,
   selectCartTotal,
 } from "../../../core/store/slice/cartSlice.js";
+import { useAuth } from "../../auth/hooks/useAuth.js";
 export default function CheckoutPage() {
   const handleSubmit = async (e) => {};
   const handleChange = (field, value) => {
@@ -19,6 +20,8 @@ export default function CheckoutPage() {
   const [showTimeModal, setShowTimeModal] = useState(false);
   const count = useSelector(selectCartCount);
   const total = useSelector(selectCartTotal);
+  const { user } = useAuth();
+  console.log("tài khoản:", user);
 
   const [form, setForm] = useState({
     address: "",
@@ -29,6 +32,16 @@ export default function CheckoutPage() {
     email: "",
     paymentMethod: "cash",
   });
+  useEffect(() => {
+    if (user) {
+      setForm({
+        fullName: user.fullName || "",
+        phoneNumber: user.phoneNumber || "",
+        email: user.email || "",
+      });
+    }
+  }, [user]);
+
   return (
     <div className="checkout-container">
       <form onSubmit={handleSubmit}>
@@ -40,7 +53,12 @@ export default function CheckoutPage() {
               note={form.note}
               deliveryTime={form.deliveryTime}
             />
-            <CustomerSection></CustomerSection>
+            <CustomerSection
+              fullName={form.fullName}
+              phoneNumber={form.phoneNumber}
+              email={form.email}
+              onChange={handleChange}
+            ></CustomerSection>
             <PaymentMethodSection></PaymentMethodSection>
           </div>
           <div className="checkout-right">

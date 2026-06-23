@@ -22,6 +22,7 @@ export default function CartPage() {
   const items = useSelector(selectCartItems);
   const total = useSelector(selectCartTotal);
   const count = useSelector(selectCartCount);
+
   const dispatch = useDispatch();
   if (items.length === 0) {
     return (
@@ -135,6 +136,7 @@ export default function CartPage() {
               {total.toLocaleString("vi-VN")} đ
             </span>
           </div>
+
           <button
             className="cart-summary__checkout"
             onClick={() => navigate(ROUTES.CHECKOUT)}

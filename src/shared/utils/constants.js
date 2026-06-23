@@ -32,6 +32,7 @@ import Visa from "../../assets/paymentMethod/visa.png";
 import Vnpay from "../../assets/paymentMethod/vnpay.png";
 import ApplePay from "../../assets/paymentMethod/applepay.png";
 import GooglePay from "../../assets/paymentMethod/googlepay.png";
+import Stripe from "../../assets/paymentMethod/stripe.png";
 //router
 export const ROUTES = {
   HOME: "/",
@@ -95,6 +96,11 @@ export const BASE_URL = "https://localhost:5000";
 export const CART_STORAGE_KEY = "LearnReactjs";
 
 export const PAYMENT_METHODS = [
+  {
+    id: "stripe",
+    name: "Stripe",
+    image: Stripe,
+  },
   {
     id: "cash",
     name: "Tiền mặt",

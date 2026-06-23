@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../../../shared/styles/checkout.css";
 import { PAYMENT_METHODS } from "../../../shared/utils/constants";
 export default function PaymentMethodSection({ onChange }) {
-  const [selectedMethod, setSelectedMethod] = useState("cash");
+  const [selectedMethod, setSelectedMethod] = useState("stripe");
   const handleSelect = (id) => {
     setSelectedMethod(id);
     if (onChange) onChange(id);

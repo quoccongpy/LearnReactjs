@@ -26,7 +26,14 @@ const AppRoutes = () => {
         <Route path={ROUTES.CART} element={<CartPage />} />
       </Route>
       <Route element={<CheckoutLayout />}>
-        <Route path={ROUTES.CHECKOUT} element={<CheckoutPage />} />
+        <Route
+          path={ROUTES.CHECKOUT}
+          element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          }
+        />
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />}></Route>
       <Route path={ROUTES.REGISTER} element={<Register />}></Route>
