@@ -24,6 +24,15 @@ import { IoMdResize } from "react-icons/io";
 import { FiLayers } from "react-icons/fi";
 
 import { BiCategory } from "react-icons/bi";
+
+import Cash from "../../assets/paymentMethod/cash.png";
+import ZaloPay from "../../assets/paymentMethod/zalopay.png";
+import Momo from "../../assets/paymentMethod/momo.png";
+import Visa from "../../assets/paymentMethod/visa.png";
+import Vnpay from "../../assets/paymentMethod/vnpay.png";
+import ApplePay from "../../assets/paymentMethod/applepay.png";
+import GooglePay from "../../assets/paymentMethod/googlepay.png";
+import Stripe from "../../assets/paymentMethod/stripe.png";
 //router
 export const ROUTES = {
   HOME: "/",
@@ -85,3 +94,46 @@ export const SIDEBAR_ITEMS = [
 export const BASE_URL = "https://localhost:5000";
 
 export const CART_STORAGE_KEY = "LearnReactjs";
+
+export const PAYMENT_METHODS = [
+  {
+    id: "stripe",
+    name: "Stripe",
+    image: Stripe,
+  },
+  {
+    id: "cash",
+    name: "Tiền mặt",
+    image: Cash,
+  },
+  {
+    id: "zalopay",
+    name: "ZaloPay",
+    image: ZaloPay,
+  },
+  {
+    id: "momo",
+    name: "Momo",
+    image: Momo,
+  },
+  {
+    id: "visa",
+    name: "ATM/VISA",
+    image: Visa,
+  },
+  {
+    id: "vnpay",
+    name: "VNPAY",
+    image: Vnpay,
+  },
+  {
+    id: "applepay",
+    name: "Apple Pay",
+    image: ApplePay,
+  },
+  {
+    id: "googlepay",
+    name: "Google Pay",
+    image: GooglePay,
+  },
+];

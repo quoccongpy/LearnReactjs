@@ -57,6 +57,14 @@ function getCurrentUser() {
   const token = getToken();
 
   if (!token) return null;
+  const expiresAt = localStorage.getItem(EXPIRES_AT_KEY);
+  if (expiresAt) {
+    const isExpired = new Date(expiresAt) < new Date();
+    if (isExpired) {
+      logout();
+      return null;
+    }
+  }
 
   return decodeToken(token);
 }

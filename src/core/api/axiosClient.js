@@ -42,7 +42,7 @@ axiosClient.interceptors.response.use(
           const refreshToken = localStorage.getItem("refresh_token");
 
           const res = await axios.post(
-            "https://localhost:5001/api/auth/refresh-token",
+            "https://localhost:5000/api/auth/refresh-token",
             {
               refreshToken: refreshToken,
             },

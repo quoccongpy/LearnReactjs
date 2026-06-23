@@ -12,6 +12,7 @@ function RegisterPage() {
 
   const [formData, setFormData] = useState({
     phone: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -19,12 +20,22 @@ function RegisterPage() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (errors[e.target.name]) {
+      setErrors((prev) => {
+        const updated = { ...prev };
+        delete updated[e.target.name];
+        return updated;
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateRegister(formData);
     setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
     try {
       setLoading(true);
       await authService.register({
@@ -75,7 +86,6 @@ function RegisterPage() {
                 <input
                   type="tel"
                   name="phone"
-                  required
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="Nhập số điện thoại"
@@ -98,7 +108,6 @@ function RegisterPage() {
                 <input
                   type="text"
                   name="username"
-                  required
                   value={formData.username}
                   onChange={handleChange}
                   placeholder="Nhập tên đăng nhập"
@@ -121,7 +130,6 @@ function RegisterPage() {
                 <input
                   type="email"
                   name="email"
-                  required
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Nhập email"
@@ -143,7 +151,6 @@ function RegisterPage() {
                 <input
                   type="password"
                   name="password"
-                  required
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Nhập mật khẩu"
@@ -165,7 +172,6 @@ function RegisterPage() {
                 <input
                   type="password"
                   name="confirmPassword"
-                  required
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="Nhập lại mật khẩu"

@@ -64,6 +64,7 @@ export default function LocationModal({ onClose, onSelect }) {
         />
 
         <button
+          type="button"
           onClick={handleGetLocation}
           className="w-full border border-red-500 text-red-500 py-2 rounded-lg mb-4 hover:bg-red-50"
         >
@@ -71,6 +72,7 @@ export default function LocationModal({ onClose, onSelect }) {
         </button>
 
         <button
+          type="button"
           onClick={() => {
             const locationData = {
               address,
