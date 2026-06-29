@@ -1,14 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "../../../shared/styles/checkout.css";
 import { IoChevronForward } from "react-icons/io5";
-export default function OrderSummarySection({
-  items,
-  total,
-  count,
-  loading,
-  agreeTerms,
-  onAgreeChange,
-}) {
+export default function OrderSummarySection({ items, total, count, loading }) {
   const navigate = useNavigate();
   return (
     <>
@@ -39,30 +32,8 @@ export default function OrderSummarySection({
       </div>
 
       <div className="checkout-card">
-        <label className="terms-checkbox">
-          <input
-            type="checkbox"
-            checked={agreeTerms}
-            onChange={(e) => onAgreeChange(e.target.checked)}
-          />
-          <span className="terms-text">
-            Tôi đồng ý với
-            <a href="#" className="terms-link">
-              các điều khoản và điều kiện
-            </a>
-            và tham gia
-            <a href="#" className="terms-link">
-              chương trình thành viên Hut Rewards
-            </a>
-            để tích điểm và hưởng quyền lợi theo quy định của chương trình.
-          </span>
-        </label>
-        <button
-          type="submit"
-          className="place-order-btn"
-          disabled={loading || !agreeTerms}
-        >
-          {loading ? "Đang xử lý..." : "Đặt hàng"}
+        <button type="submit" className="place-order-btn">
+          Đặt hàng
         </button>
       </div>
     </>

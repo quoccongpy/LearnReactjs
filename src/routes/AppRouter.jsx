@@ -16,6 +16,8 @@ import CartPage from "../features/cart/pages/CartPage";
 import CartLayout from "../layouts/CartLayout";
 import CheckoutPage from "../features/order/pages/CheckoutPage";
 import CheckoutLayout from "../layouts/CheckoutLayout";
+import StripePaymentPage from "../features/order/pages/StripePaymentPage";
+import OrderConfirmationPage from "../features/order/pages/OrderConfirmationPage";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -34,9 +36,21 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/order-confirmation/:orderId"
+          element={<OrderConfirmationPage />}
+        />
       </Route>
       <Route path={ROUTES.LOGIN} element={<Login />}></Route>
       <Route path={ROUTES.REGISTER} element={<Register />}></Route>
+      <Route
+        path="/payment/stripe/:orderId"
+        element={
+          <ProtectedRoute>
+            <StripePaymentPage></StripePaymentPage>
+          </ProtectedRoute>
+        }
+      />
 
       <Route
         path="/admin"

@@ -1,11 +1,8 @@
-import { useState } from "react";
 import "../../../shared/styles/checkout.css";
 import { PAYMENT_METHODS } from "../../../shared/utils/constants";
-export default function PaymentMethodSection({ onChange }) {
-  const [selectedMethod, setSelectedMethod] = useState("stripe");
+export default function PaymentMethodSection({ selectedMethod, onChange }) {
   const handleSelect = (id) => {
-    setSelectedMethod(id);
-    if (onChange) onChange(id);
+    if (onChange) onChange("paymentMethod", id);
   };
   return (
     <div className="checkout-card">

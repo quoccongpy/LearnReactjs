@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "../../../shared/styles/checkout.css";
 import DeliverySection from "./DeliverySection.jsx";
 import { IoChevronForward } from "react-icons/io5";
@@ -6,41 +5,19 @@ import TimePickerModal from "./TimePickerModal.jsx";
 import CustomerSection from "./CustomerSection.jsx";
 import PaymentMethodSection from "./PaymentMethodSection.jsx";
 import OrderSummarySection from "./OrderSummarySection.jsx";
-import { useSelector } from "react-redux";
-import {
-  selectCartCount,
-  selectCartTotal,
-} from "../../../core/store/slice/cartSlice.js";
-import { useAuth } from "../../auth/hooks/useAuth.js";
-export default function CheckoutPage() {
-  const handleSubmit = async (e) => {};
-  const handleChange = (field, value) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
-  const [showTimeModal, setShowTimeModal] = useState(false);
-  const count = useSelector(selectCartCount);
-  const total = useSelector(selectCartTotal);
-  const { user } = useAuth();
-  console.log("tài khoản:", user);
 
-  const [form, setForm] = useState({
-    address: "",
-    note: "",
-    deliveryTime: { type: "now" },
-    fullName: "",
-    phoneNumber: "",
-    email: "",
-    paymentMethod: "cash",
-  });
-  useEffect(() => {
-    if (user) {
-      setForm({
-        fullName: user.fullName || "",
-        phoneNumber: user.phoneNumber || "",
-        email: user.email || "",
-      });
-    }
-  }, [user]);
+import useCheckout from "../hooks/useCheckout.js";
+export default function CheckoutPage() {
+  const {
+    form,
+    handleChange,
+    handleSubmit,
+    loading,
+    showTimeModal,
+    setShowTimeModal,
+    count,
+    total,
+  } = useCheckout();
 
   return (
     <div className="checkout-container">
@@ -59,7 +36,10 @@ export default function CheckoutPage() {
               email={form.email}
               onChange={handleChange}
             ></CustomerSection>
-            <PaymentMethodSection></PaymentMethodSection>
+            <PaymentMethodSection
+              selectedMethod={form.paymentMethod}
+              onChange={handleChange}
+            ></PaymentMethodSection>
           </div>
           <div className="checkout-right">
             <OrderSummarySection
