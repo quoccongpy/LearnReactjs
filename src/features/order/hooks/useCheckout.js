@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { createOrder } from "../services/orderService";
 import toastService from "../../../shared/utils/toastService";
+import { createVnPayUrl } from "../services/paymentService";
 
 export default function useCheckout() {
   const navigate = useNavigate();
@@ -103,9 +104,15 @@ export default function useCheckout() {
         case "stripe":
           navigate(`/payment/stripe/${orderId}`);
           break;
-        case "vnpay":
-          navigate(`/payment/vnpay/${orderId}`);
+        case "vnpay": {
+          const vnpayRes = await createVnPayUrl(orderId);
+          if (vnpayRes.data?.paymentUrl) {
+            window.location.href = vnpayRes.data.paymentUrl;
+          } else {
+            toastService.error("Không thể tạo liên kết thanh toán VNPay");
+          }
           break;
+        }
         default:
           navigate(`/payment/stripe/${orderId}`);
       }

@@ -73,15 +73,29 @@ export default function CartPage() {
 
                 <div className="cart-item__info">
                   <h3 className="cart-item__name">{item.productName}</h3>
-                  Cỡ: {item.sizeName}
-                  <br></br>
-                  Đế: {item.crustName}({item.sizeName})<br></br>
-                  Ghi chú: {item.note}
+                  {item.sizeName && (
+                    <>
+                      Cỡ: {item.sizeName}
+                      <br />
+                    </>
+                  )}
+                  {item.crustName && (
+                    <>
+                      Đế: {item.crustName}
+                      {item.sizeName ? `(${item.sizeName})` : ""}
+                      <br />
+                    </>
+                  )}
+                  {item.note && (
+                    <>
+                      Ghi chú: {item.note}
+                      <br />
+                    </>
+                  )}
                   <p className="cart-item__price">
                     {item.price?.toLocaleString("vi-VN")} đ
                   </p>
                 </div>
-
                 <div className="cart-item__actions">
                   <div className="cart-item__quantity">
                     <button
