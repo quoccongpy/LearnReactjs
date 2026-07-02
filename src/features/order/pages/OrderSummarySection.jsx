@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "../../../shared/styles/checkout.css";
 import { IoChevronForward } from "react-icons/io5";
-export default function OrderSummarySection({ items, total, count, loading }) {
+export default function OrderSummarySection({ total, count }) {
   const navigate = useNavigate();
   return (
     <>
