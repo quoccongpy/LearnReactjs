@@ -19,6 +19,8 @@ import CheckoutLayout from "../layouts/CheckoutLayout";
 import StripePaymentPage from "../features/order/pages/StripePaymentPage";
 import OrderConfirmationPage from "../features/order/pages/OrderConfirmationPage";
 import VnPayCallbackPage from "../features/order/pages/VnPayCallbackPage";
+import PayPalCallbackPage from "../features/order/pages/PayPalCallbackPage";
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -57,6 +59,14 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <VnPayCallbackPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/payment/paypal-callback"
+        element={
+          <ProtectedRoute>
+            <PayPalCallbackPage />
           </ProtectedRoute>
         }
       />

@@ -4,6 +4,7 @@ import reactLogo from "../../../assets/react.svg";
 import { validateRegister } from "../../../shared/utils/validate";
 import authService from "../services/authService";
 import toastService from "../../../shared/utils/toastService";
+import LoadingOverlay from "../../../shared/components/LoadingOverlay";
 
 function RegisterPage() {
   const [errors, setErrors] = useState({});
@@ -111,7 +112,6 @@ function RegisterPage() {
                   value={formData.username}
                   onChange={handleChange}
                   placeholder="Nhập tên đăng nhập"
-                  maxLength={10}
                   className={`w-full px-4 py-3 border rounded-lg focus:outline-none transition-colors ${
                     errors.username
                       ? "border-red-500 focus:border-red-500"

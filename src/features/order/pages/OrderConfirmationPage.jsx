@@ -1,13 +1,24 @@
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import "../../../shared/styles/checkout.css";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { clearCart } from "../../../core/store/slice/cartSlice";
 
 export default function OrderConfirmationPage() {
   const { orderId } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const redirectStatus = searchParams.get("redirect_status");
-  const isSuccess = redirectStatus === "succeeded";
+  const paymentStatus = searchParams.get("payment_status");
+  const isSuccess =
+    redirectStatus === "succeeded" || paymentStatus === "success";
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(clearCart());
+    }
+  }, [isSuccess, dispatch]);
 
   return (
     <div className="checkout-container">

@@ -33,6 +33,7 @@ import Vnpay from "../../assets/paymentMethod/vnpay.png";
 import ApplePay from "../../assets/paymentMethod/applepay.png";
 import GooglePay from "../../assets/paymentMethod/googlepay.png";
 import Stripe from "../../assets/paymentMethod/stripe.png";
+import Paypal from "../../assets/paymentMethod/paypal.png";
 //router
 export const ROUTES = {
   HOME: "/",
@@ -125,6 +126,11 @@ export const PAYMENT_METHODS = [
     id: "vnpay",
     name: "VNPAY",
     image: Vnpay,
+  },
+  {
+    id: "paypal",
+    name: "PAYPAL",
+    image: Paypal,
   },
   {
     id: "applepay",
