@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPaymentIntent } from "../services/orderService";
 import toastService from "../../../shared/utils/toastService";
 
 export const useStripePayment = (orderId) => {
   const [stripeData, setStripeData] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const isCaptured = useRef(false);
   useEffect(() => {
-    if (!orderId) return;
+    if (!orderId || isCaptured.current) return;
+    isCaptured.current = true;
 
     const initPayment = async () => {
       try {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import toastService from "../../../shared/utils/toastService";
 import { executeVnPayPayment } from "../services/orderService";
@@ -8,8 +8,11 @@ export default function useVnPayCallback() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [paymentResult, setPaymentResult] = useState(null);
+  const isCaptured = useRef(false);
 
   useEffect(() => {
+    if (isCaptured.current) return;
+    isCaptured.current = true;
     let timeoutId;
     const verifyPayment = async () => {
       try {
@@ -18,9 +21,12 @@ export default function useVnPayCallback() {
         if (response.data.success) {
           toastService.success("Thanh toán thành công!");
           timeoutId = setTimeout(() => {
-            navigate(`/order-confirmation/${response.data.orderId}`, {
-              replace: true,
-            });
+            navigate(
+              `/order-confirmation/${response.data.orderId}?payment_status=success`,
+              {
+                replace: true,
+              },
+            );
           }, 3000);
         } else {
           toastService.error(response.data.message);

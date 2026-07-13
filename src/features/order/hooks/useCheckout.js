@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { createOrder } from "../services/orderService";
 import toastService from "../../../shared/utils/toastService";
-import { createVnPayUrl } from "../services/paymentService";
+import { createPayPalOrder, createVnPayUrl } from "../services/paymentService";
 
 export default function useCheckout() {
   const navigate = useNavigate();
@@ -99,7 +99,6 @@ export default function useCheckout() {
     try {
       const orderRes = await createOrder(buildOrderData());
       const { orderId } = orderRes.data;
-      dispatch(clearCart());
       switch (form.paymentMethod) {
         case "stripe":
           navigate(`/payment/stripe/${orderId}`);
@@ -113,6 +112,16 @@ export default function useCheckout() {
           }
           break;
         }
+        case "paypal": {
+          const paypalRes = await createPayPalOrder(orderId);
+          if (paypalRes.data?.approvalUrl) {
+            window.location.href = paypalRes.data.approvalUrl;
+          } else {
+            toastService.error("Không thể tạo liên kết thanh toán PayPal");
+          }
+          break;
+        }
+
         default:
           navigate(`/payment/stripe/${orderId}`);
       }
