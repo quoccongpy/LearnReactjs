@@ -16,10 +16,12 @@ import CartPage from "../features/cart/pages/CartPage";
 import CartLayout from "../layouts/CartLayout";
 import CheckoutPage from "../features/order/pages/CheckoutPage";
 import CheckoutLayout from "../layouts/CheckoutLayout";
+import OrderTrackingLayout from "../layouts/OrderTrackingLayout";
 import StripePaymentPage from "../features/order/pages/StripePaymentPage";
 import OrderConfirmationPage from "../features/order/pages/OrderConfirmationPage";
 import VnPayCallbackPage from "../features/order/pages/VnPayCallbackPage";
 import PayPalCallbackPage from "../features/order/pages/PayPalCallbackPage";
+import OrderTrackingPage from "../features/order/pages/OrderTracking/OrderTrackingPage";
 
 const AppRoutes = () => {
   return (
@@ -44,6 +46,18 @@ const AppRoutes = () => {
           element={<OrderConfirmationPage />}
         />
       </Route>
+
+      <Route element={<OrderTrackingLayout />}>
+        <Route
+          path="/order-tracking"
+          element={
+            <ProtectedRoute>
+              <OrderTrackingPage />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
+
       <Route path={ROUTES.LOGIN} element={<Login />}></Route>
       <Route path={ROUTES.REGISTER} element={<Register />}></Route>
       <Route
