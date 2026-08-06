@@ -87,7 +87,7 @@ export const SIDEBAR_ITEMS = [
     path: "/admin/product-variant",
     icon: AiOutlineProduct,
   },
-  { label: "Đơn hàng", path: "/admin/orders", icon: IoReceiptOutline },
+  { label: "Đơn hàng", path: "/admin/order", icon: IoReceiptOutline },
   { label: "Khách hàng", path: "/admin/customers", icon: IoPeopleOutline },
   { label: "Cài đặt", path: "/admin/settings", icon: IoSettingsOutline },
 ];

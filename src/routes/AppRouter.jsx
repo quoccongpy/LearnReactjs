@@ -22,6 +22,7 @@ import OrderConfirmationPage from "../features/order/pages/OrderConfirmationPage
 import VnPayCallbackPage from "../features/order/pages/VnPayCallbackPage";
 import PayPalCallbackPage from "../features/order/pages/PayPalCallbackPage";
 import OrderTrackingPage from "../features/order/pages/OrderTracking/OrderTrackingPage";
+import AdminOrderPage from "../features/admin/order/pages/AdminOrderPage";
 
 const AppRoutes = () => {
   return (
@@ -99,6 +100,7 @@ const AppRoutes = () => {
         <Route path="product-variant" element={<ProductVariantPage />} />
         <Route path="size" element={<SizePage />} />
         <Route path="crust" element={<CrustPage />} />
+        <Route path="order" element={<AdminOrderPage />} />
       </Route>
     </Routes>
   );
