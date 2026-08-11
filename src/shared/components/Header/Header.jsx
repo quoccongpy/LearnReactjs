@@ -7,6 +7,7 @@ import {
 } from "../../utils/constants";
 import pizzaHutLogo from "../../../assets/logo.svg";
 import { useSelector } from "react-redux";
+import NotificationDropdown from "../../../features/notification/components/NotificationDropdown";
 
 import {
   IoNotificationsOutline,
@@ -100,9 +101,7 @@ function Header() {
               </Link>
 
               <div className="flex items-center gap-4">
-                <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                  <IoNotificationsOutline className="w-5 h-5 text-gray-700" />
-                </button>
+                <NotificationDropdown />
                 <button className="text-sm font-semibold text-[#E31837]">
                   VI
                 </button>
