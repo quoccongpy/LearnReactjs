@@ -8,6 +8,7 @@ import {
   FaUtensils,
   FaBox,
 } from "react-icons/fa";
+import { MdRateReview } from "react-icons/md";
 import { CiPizza } from "react-icons/ci";
 import { GiChickenOven } from "react-icons/gi";
 import { RiDrinksLine } from "react-icons/ri";
@@ -82,6 +83,7 @@ export const SIDEBAR_ITEMS = [
   { label: "Category", path: "/admin/category", icon: BiCategory },
   { label: "Size", path: "/admin/size", icon: IoMdResize },
   { label: "Crust", path: "/admin/crust", icon: FiLayers },
+  { label: "Đánh giá", path: "/admin/reviews", icon: MdRateReview },
   {
     label: "Product Variant",
     path: "/admin/product-variant",

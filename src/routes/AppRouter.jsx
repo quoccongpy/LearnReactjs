@@ -23,6 +23,7 @@ import VnPayCallbackPage from "../features/order/pages/VnPayCallbackPage";
 import PayPalCallbackPage from "../features/order/pages/PayPalCallbackPage";
 import OrderTrackingPage from "../features/order/pages/OrderTracking/OrderTrackingPage";
 import AdminOrderPage from "../features/admin/order/pages/AdminOrderPage";
+import ReviewPage from "../features/admin/review/pages/ReviewPage";
 
 const AppRoutes = () => {
   return (
@@ -101,6 +102,7 @@ const AppRoutes = () => {
         <Route path="size" element={<SizePage />} />
         <Route path="crust" element={<CrustPage />} />
         <Route path="order" element={<AdminOrderPage />} />
+        <Route path="reviews" element={<ReviewPage />} />
       </Route>
     </Routes>
   );
